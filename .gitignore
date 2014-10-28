@@ -1,2 +1,4 @@
 build
+dist
+pdfminer.egg-info
 *.pyc

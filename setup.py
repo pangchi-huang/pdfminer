@@ -1,11 +1,22 @@
 #!/usr/bin/env python
-from distutils.core import setup
+
+# standard library imports
+from contextlib import closing
+
+# third party related imports
+from setuptools import setup
+
+# local library imports
 from pdfminer import __version__
+
+
+with closing(open('requirements.txt')) as f:
+    requires = f.read().splitlines()
 
 setup(
     name='pdfminer',
     version=__version__,
-    description='PDF parser and analyzer',
+    description='PDF parser and analyzer forked from http://euske.github.io/pdfminer',
     long_description='''PDFMiner is a tool for extracting information from PDF documents.
 Unlike other PDF-related tools, it focuses entirely on getting
 and analyzing text data. PDFMiner allows to obtain
@@ -15,9 +26,9 @@ It includes a PDF converter that can transform PDF files
 into other text formats (such as HTML). It has an extensible
 PDF parser that can be used for other purposes instead of text analysis.''',
     license='MIT/X',
-    author='Yusuke Shinyama',
-    author_email='yusuke at cs dot nyu dot edu',
-    url='http://euske.github.io/pdfminer/index.html',
+    author='Yu Liang',
+    author_email='yu.liang@thekono.com',
+    url='https://github.com/yu-liang-kono/pdfminer',
     packages=[
         'pdfminer',
     ],
@@ -42,5 +53,6 @@ PDF parser that can be used for other purposes instead of text analysis.''',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
         'Topic :: Text Processing',
-    ]
+    ],
+    install_requires=requires
 )
