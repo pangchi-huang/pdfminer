@@ -2,6 +2,7 @@
 import re
 import logging
 from .utils import choplist
+import chardet
 
 STRICT = 0
 
@@ -343,7 +344,14 @@ class PSBaseParser(object):
             self.hex = b''
             self._parse1 = self._parse_literal_hex
             return j+1
-        self._add_token(LIT(unicode(self._curtoken)))
+
+        try:
+            token = unicode(self._curtoken)
+        except UnicodeDecodeError:
+            encoding_detection = chardet.detect(self._curtoken)
+            token = unicode(self._curtoken, encoding_detection['encoding'])
+
+        self._add_token(LIT(token))
         self._parse1 = self._parse_main
         return j
 
