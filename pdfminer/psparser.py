@@ -332,6 +332,24 @@ class PSBaseParser(object):
         #self._tokens.append(self._curtoken)
         return j
 
+    def _decode_token(self, token):
+
+        try:
+            return unicode(token)
+        except UnicodeDecodeError as e:
+            attempts = ['cp932']
+            encoding_detection = chardet.detect(token)
+            if encoding_detection and encoding_detection['encoding']:
+                attempts.insert(0, encoding_detection['encoding'])
+
+            for attempt in attempts:
+                try:
+                    return unicode(token, attempt)
+                except UnicodeDecodeError as e:
+                    pass
+            else:
+                raise e
+
     def _parse_literal(self, s, i):
         m = END_LITERAL.search(s, i)
         if not m:
@@ -345,12 +363,7 @@ class PSBaseParser(object):
             self._parse1 = self._parse_literal_hex
             return j+1
 
-        try:
-            token = unicode(self._curtoken)
-        except UnicodeDecodeError:
-            encoding_detection = chardet.detect(self._curtoken)
-            token = unicode(self._curtoken, encoding_detection['encoding'])
-
+        token = self._decode_token(self._curtoken)
         self._add_token(LIT(token))
         self._parse1 = self._parse_main
         return j
