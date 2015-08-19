@@ -337,7 +337,13 @@ class PSBaseParser(object):
         try:
             return unicode(token)
         except UnicodeDecodeError as e:
-            attempts = ['cp932']
+            attempts = [
+                'cp932', 'euc_jp', 'euc_jis_2004', 'euc_jisx0213',
+                'iso2022_jp_1', 'iso2022_jp_2', 'iso2022_jp_2004',
+                'iso2022_jp_3', 'iso2022_jp_ext', 'shift_jis',
+                'shift_jis_2004', 'shift_jisx0213', 'cp949',
+                'euc_kr', 'iso2022_kr', 'johab',
+            ]
             encoding_detection = chardet.detect(token)
             if encoding_detection and encoding_detection['encoding']:
                 attempts.insert(0, encoding_detection['encoding'])
