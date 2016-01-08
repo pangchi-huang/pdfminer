@@ -167,7 +167,7 @@ class PDFResourceManager(object):
         if objid and objid in self._cached_fonts:
             font = self._cached_fonts[objid]
         else:
-            logging.info('get_font: create: objid=%r, spec=%r' % (objid, spec))
+            # logging.info('get_font: create: objid=%r, spec=%r' % (objid, spec))
             if STRICT:
                 if spec['Type'] is not LITERAL_FONT:
                     raise PDFFontError('Type is not /Font')
