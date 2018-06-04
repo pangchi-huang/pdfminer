@@ -260,8 +260,11 @@ class LTChar(LTComponent, LTText):
         LTComponent.__init__(self, (x0, y0, x1, y1))
         if font.is_vertical():
             self.size = self.width
+            self.is_vertical = True
         else:
             self.size = self.height
+            self.is_vertical = False
+
         return
 
     def __repr__(self):
