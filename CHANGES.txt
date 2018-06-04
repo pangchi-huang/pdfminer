@@ -1,0 +1,3 @@
+20180604
+===============
+- Expose text vertical/horizontal information.
